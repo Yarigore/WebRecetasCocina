@@ -23,8 +23,14 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/css/**", "/img/**", "/", "/signUp", "/buscar/**",
-                                "/receta/**", "/guardarUsuario", "/inicioSesion").permitAll()
+                                "/css/**",
+                                "/img/**",
+                                "/",
+                                "/signUp",
+                                "/buscar/**",
+                                "/receta/**",
+                                "/guardarUsuario",
+                                "/inicioSesion").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login

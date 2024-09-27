@@ -3,6 +3,7 @@ package com.dimas.web.WebCocina.service;
 import com.dimas.web.WebCocina.domain.Usuario;
 import com.dimas.web.WebCocina.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,7 +38,7 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = userOptional.get();
 
         // Devolver un UserDetails que Spring Security pueda usar
-        return org.springframework.security.core.userdetails.User.withUsername(usuario.getCorreo())
+        return User.withUsername(usuario.getCorreo())
                 .password(usuario.getContrasenya()) // Asegúrate de que la contraseña esté cifrada en la BD
                 .authorities(usuario.getAuthorities()) // Añadir los roles o autoridades
                 .build();

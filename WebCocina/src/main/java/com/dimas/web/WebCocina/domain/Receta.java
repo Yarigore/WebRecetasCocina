@@ -1,9 +1,9 @@
 package com.dimas.web.WebCocina.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Receta {
@@ -13,8 +13,17 @@ public class Receta {
     private Integer id;
     private String nombre;
     private String descripcion;
+    private Integer personas;
     private Integer tiempo;
-    private String receta;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "receta_id")
+    private List<Ingrediente> ingredientes = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "receta_id")
+    private List<Paso> pasos = new ArrayList<>();
+
     private String imagenUrl;
 
     public Integer getId() {
@@ -41,6 +50,14 @@ public class Receta {
         this.descripcion = descripcion;
     }
 
+    public Integer getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Integer personas) {
+        this.personas = personas;
+    }
+
     public Integer getTiempo() {
         return tiempo;
     }
@@ -49,12 +66,20 @@ public class Receta {
         this.tiempo = tiempo;
     }
 
-    public String getReceta() {
-        return receta;
+    public List<Ingrediente> getIngredientes() {
+        return ingredientes;
     }
 
-    public void setReceta(String receta) {
-        this.receta = receta;
+    public void setIngredientes(List<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+
+    public List<Paso> getPasos() {
+        return pasos;
+    }
+
+    public void setPasos(List<Paso> pasos) {
+        this.pasos = pasos;
     }
 
     public String getImagenUrl() {
@@ -64,4 +89,5 @@ public class Receta {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
+
 }

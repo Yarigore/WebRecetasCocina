@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,16 +38,27 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
+
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+                        <li>
+                            <h2>Bienvenido, <span th:text="${usuario}">Usuario</span>!</h2>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li th:if="${#authorization.expression('isAnonymous()')}">
                             <a class="nav-link" th:href="@{/logIn}">Log in</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/signUp}">Sign up</a>
                         </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-outline-danger">Cerrar Sesión</button>
+                            </form>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -59,10 +70,23 @@
             <div class="card mb-3">
                 <img th:src="${recetaElegida.imagenUrl}" class="card-img-top mt-3" alt="Receta">
                 <div class="card-body">
-                    <h4 th:text="${recetaElegida.nombre}" class="card-title"></h4>
+                    <h3 th:text="${recetaElegida.nombre}" class="card-title"></h3>
                     <p th:text="${recetaElegida.descripcion}" class="card-text"></p>
-                    <h5 th:text="'Tiempo: ' + ${recetaElegida.tiempo} + ' minutos'" class="card-text"></h5>
-                    <p th:text="${recetaElegida.receta}" class="card-text"></p>
+                    <p th:text="'(Para ' + ${recetaElegida.personas} + ' personas)'" class="card-text"></p>
+                    <h4 th:text="'Tiempo: ' + ${recetaElegida.tiempo} + ' minutos'" class="card-text"></h4>
+                    <h5>Ingredientes</h5>
+                    <ul>
+                        <li th:each="ingrediente : ${recetaElegida.ingredientes}">
+                            <span th:text="${ingrediente.nombre}"></span>:
+                            <span th:text="${ingrediente.cantidad}"></span>
+                        </li>
+                    </ul>
+                    <h5>Pasos</h5>
+                    <ul>
+                        <li th:each="paso : ${recetaElegida.pasos}">
+                            <span th:text="${paso.nombre}"></span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
