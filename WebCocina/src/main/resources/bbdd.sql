@@ -35,7 +35,7 @@ CREATE TABLE ingrediente (
 -- Crear tabla de pasos relacionados con una receta (FK)
 CREATE TABLE paso (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL, -- Paso a seguir
+    nombre VARCHAR(1000) NOT NULL, -- Paso a seguir
     receta_id INT, -- Relación con receta
     CONSTRAINT fk_receta_paso  FOREIGN KEY (receta_id) REFERENCES receta(id) ON DELETE CASCADE
 );

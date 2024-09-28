@@ -34,7 +34,7 @@
             <!-- Offcanvas -->
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -82,11 +82,9 @@
                         </li>
                     </ul>
                     <h5>Pasos</h5>
-                    <ul>
-                        <li th:each="paso : ${recetaElegida.pasos}">
-                            <span th:text="${paso.nombre}"></span>
-                        </li>
-                    </ul>
+                    <div th:each="paso : ${recetaElegida.pasos}">
+                        <p th:text="${paso.nombre}"></p>
+                    </div>
                 </div>
             </div>
         </div>
