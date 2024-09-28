@@ -172,3 +172,7 @@ INSERT INTO paso (nombre, receta_id) VALUES
 ('Paso 3. Agrega la nata, el azúcar y la canela, y lleva a ebullición. Retira, añade el chocolate rallado y remueve. Deja templar y agrega las yemas batidas. Monta las claras e incorpóralas.', 5),
 ('Paso 4. Cuece al vapor. Reparte la crema en flaneras y cuécelas 15 minutos, en el cestillo de cocción al vapor, tapadas, hasta que cuajen. Deja reposar 5 minutos y sírvelos fríos.', 5),
 ('El truco: sirve estos budines decorados con unas frutas rojas como grosellas, moras, arándanos...', 5);
+
+-- Insertar pasos para cada usuario
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `contrasenya`) VALUES
+(1, 'yari', 'yari@gmail.com', '$2a$10$CGHKCkMEbIE6tSOjovSwA.0X/KOjkt3Ag/qmDkTtvkEPdU8w6RBTy');
