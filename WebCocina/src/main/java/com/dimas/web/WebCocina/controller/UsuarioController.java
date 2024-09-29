@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 public class UsuarioController {
 
@@ -25,15 +27,21 @@ public class UsuarioController {
     }
 
     @RequestMapping("/signUp")
-    public String crearCuenta(Model model){
-        model.addAttribute("newusuario", new Usuario());
+    public String crearCuenta(Model model) {
+        model.addAttribute("usuario", new Usuario()); // Este "usuario" es siempre un objeto Usuario
         return "signUp";
     }
 
+
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(Usuario usuario){
-        usuarioService.crearUsuario(usuario);
-        return "redirect:/";
+    public String guardarUsuario(Usuario usuario, Model model){
+        try {
+            usuarioService.crearUsuario(usuario);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("error", "El usuario ya está registrado o hubo un problema");
+            return "signUp";
+        }
     }
 
     @RequestMapping("/logout")
@@ -47,9 +55,11 @@ public class UsuarioController {
 
         if (authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken)) {
-            model.addAttribute("usuario", authentication.getName());
+            Optional<Usuario> usuario = usuarioService.getUserByEmail(authentication.getName());
+            usuario.ifPresent(value -> model.addAttribute("nombreUsuario", value.getNombre())); // Cambiar "usuario" por "nombreUsuario"
         } else {
-            model.addAttribute("usuario", "invitado");
+            model.addAttribute("nombreUsuario", "invitado"); // Cambiar "usuario" por "nombreUsuario"
         }
     }
+
 }

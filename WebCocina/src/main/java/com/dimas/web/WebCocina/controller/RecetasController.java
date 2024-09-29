@@ -1,6 +1,7 @@
 package com.dimas.web.WebCocina.controller;
 
 import com.dimas.web.WebCocina.domain.Receta;
+import com.dimas.web.WebCocina.domain.Usuario;
 import com.dimas.web.WebCocina.service.RecetaService;
 import com.dimas.web.WebCocina.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,10 @@ public class RecetasController {
 
         if (authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken)) {
-            model.addAttribute("usuario", authentication.getName());
+            Optional<Usuario> usuario = usuarioService.getUserByEmail(authentication.getName());
+            usuario.ifPresent(value -> model.addAttribute("nombreUsuario", value.getNombre())); // Cambiar "usuario" por "nombreUsuario"
         } else {
-            model.addAttribute("usuario", "invitado");
+            model.addAttribute("nombreUsuario", "invitado"); // Cambiar "usuario" por "nombreUsuario"
         }
     }
 

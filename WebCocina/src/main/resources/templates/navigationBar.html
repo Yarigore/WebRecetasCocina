@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="navbar">
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/img/Logo.png}" alt="Logo" width="60" height="60">
+                Hola Cocina
+            </a>
+
+            <!-- Contenedor para buscar y botón -->
+            <div class="d-flex align-items-center">
+                <!-- Formulario de búsqueda -->
+                <form th:action="@{/buscar}" class="d-flex me-2" role="search">
+                    <input class="form-control me-2" name="q" type="search" th:placeholder="${param.q}" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+
+                <!-- Botón de navbar-toggler -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Offcanvas -->
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+                        <li>
+                            <h2>Bienvenido, <span th:text="${nombreUsuario}">Usuario</span>!</h2>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                        </li>
+                        <li th:if="${#authorization.expression('isAnonymous()')}">
+                            <a class="nav-link" th:href="@{/logIn}">Log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/signUp}">Sign up</a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-outline-danger">Cerrar Sesión</button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>
