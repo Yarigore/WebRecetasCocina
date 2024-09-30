@@ -30,7 +30,10 @@ public class SecurityConfig {
                                 "/buscar/**",
                                 "/receta/**",
                                 "/guardarUsuario",
-                                "/inicioSesion").permitAll()
+                                "/inicioSesion",
+                                "/guardarReceta",
+                                "/crearReceta",
+                                "/recetaUsuario").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -45,7 +48,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/logIn?logout=true")
                         .permitAll()
                 )
-                .userDetailsService(usuarioService); // Usamos UsuarioService para autenticar
+                .userDetailsService(usuarioService);
 
         return http.build();
     }

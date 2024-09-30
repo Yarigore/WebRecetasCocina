@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear Receta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:replace="~{'/navigationBar' :: navbar}"></div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <h1>Crear Receta</h1>
+    </div>
+
+    <div class="container-md mt-5 d-flex justify-content-center">
+
+        <div class="card-body">
+
+            <form method="POST" action="/guardarReceta">
+
+                <!-- Token CSRF -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre Receta" required>
+                    <label for="nombre">Nombre Receta</label>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" name="descripcion" class="form-control" id="descripcion" placeholder="Descripcion" required>
+                    <label for="descripcion">Descripcion</label>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="number" name="personas" class="form-control" id="cantidadPersonas" min="1" placeholder="Cantidad de personas" required>
+                    <label for="cantidadPersonas">Cantidad de personas</label>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="number" name="tiempo" class="form-control" id="tiempo" min="1" placeholder="Minutos para preparar" required>
+                    <label for="tiempo">Minutos para preparar</label>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="url" name="imagenUrl" class="form-control" id="imagen" placeholder="URL de la imagen de la receta" required>
+                    <label for="imagen">URL de la imagen de la receta</label>
+                </div>
+
+                <div>
+                    <!-- Ingredientes Section -->
+                    <div id="ingredientesSection">
+                        <h3>Ingredientes</h3>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="text" name="ingredientes[0].nombre" class="form-control" placeholder="Ingrediente" required>
+                                    <label>Ingrediente 1</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="text" name="ingredientes[0].cantidad" class="form-control" placeholder="Cantidad" required>
+                                    <label>Cantidad 1</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="addIngredienteBtn" class="btn btn-secondary">Añadir Ingrediente</button>
+                    <button type="button" id="removeIngredienteBtn" class="btn btn-danger">Quitar Ingrediente</button>
+
+                    <!-- Pasos Section -->
+                    <div id="pasosSection">
+                        <h3>Pasos</h3>
+                        <div class="form-floating mb-3 mt-3">
+                            <textarea name="pasos[0].nombre" class="form-control" placeholder="Paso 1" required></textarea>
+                            <label>Paso 1</label>
+                        </div>
+                    </div>
+
+                    <button type="button" id="addPasoBtn" class="btn btn-secondary">Añadir Paso</button>
+                    <button type="button" id="removePasoBtn" class="btn btn-danger">Quitar Paso</button>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-2">Crear</button> <!-- Cambia el botón "Crear" a tipo submit -->
+            </form>
+
+        </div>
+
+    </div>
+    <div class="card-footer text-body-secondary">
+        ...
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<!-- Script personalizado para añadir y quitar ingredientes y pasos -->
+<script>
+    let ingredienteCount = 1;
+    let pasoCount = 1;
+
+    // Añadir Ingrediente
+    document.getElementById('addIngredienteBtn').addEventListener('click', function () {
+        const ingredienteSection = document.getElementById('ingredientesSection');
+        const newIngrediente = `
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="ingredientes[${ingredienteCount}].nombre" class="form-control" placeholder="Ingrediente ${ingredienteCount + 1}" required>
+                        <label>Ingrediente ${ingredienteCount + 1}</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="ingredientes[${ingredienteCount}].cantidad" class="form-control" placeholder="Cantidad ${ingredienteCount + 1}" required>
+                        <label>Cantidad ${ingredienteCount + 1}</label>
+                    </div>
+                </div>
+            </div>`;
+        ingredienteSection.insertAdjacentHTML('beforeend', newIngrediente);
+        ingredienteCount++;
+    });
+
+    // Quitar Ingrediente
+    document.getElementById('removeIngredienteBtn').addEventListener('click', function () {
+        const ingredienteSection = document.getElementById('ingredientesSection');
+        const ingredientes = ingredienteSection.querySelectorAll('.row');
+        if (ingredienteCount > 1) {
+            ingredientes[ingredientes.length - 1].remove();
+            ingredienteCount--;
+        }
+    });
+
+    // Añadir Paso
+    document.getElementById('addPasoBtn').addEventListener('click', function () {
+        const pasosSection = document.getElementById('pasosSection');
+        const newPaso = `
+            <div class="form-floating mb-3 mt-3 pasoGroup">
+                <textarea name="pasos[${pasoCount}].nombre" class="form-control" placeholder="Paso ${pasoCount + 1}" required></textarea>
+                <label>Paso ${pasoCount + 1}</label>
+            </div>`;
+        pasosSection.insertAdjacentHTML('beforeend', newPaso);
+        pasoCount++;
+    });
+
+    // Quitar Paso
+    document.getElementById('removePasoBtn').addEventListener('click', function () {
+        const pasosSection = document.getElementById('pasosSection');
+        const pasos = pasosSection.querySelectorAll('.pasoGroup');
+        if (pasoCount > 1) {
+            pasos[pasos.length - 1].remove();
+            pasoCount--;
+        }
+    });
+</script>
+</body>
+</html>

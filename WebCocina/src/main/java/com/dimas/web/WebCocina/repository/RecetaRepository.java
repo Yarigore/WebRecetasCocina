@@ -12,4 +12,6 @@ public interface RecetaRepository extends JpaRepository<Receta, Integer> {
     Optional<Receta> findById(Integer id);
 
     List<Receta> findByNombreContaining(String consulta);
+
+    List<Receta> findByUsuario_Nombre(String nombre);
 }

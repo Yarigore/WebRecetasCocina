@@ -19,4 +19,6 @@ public class RecetaService {
     public List<Receta> buscar(String consulta){
         return recetaRepository.findByNombreContaining(consulta);
     }
+    public void crearReceta(Receta receta){ recetaRepository.save(receta);}
+    public List<Receta> buscarporUsuario(String nombre){ return recetaRepository.findByUsuario_Nombre(nombre);}
 }

@@ -56,9 +56,9 @@ public class UsuarioController {
         if (authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken)) {
             Optional<Usuario> usuario = usuarioService.getUserByEmail(authentication.getName());
-            usuario.ifPresent(value -> model.addAttribute("nombreUsuario", value.getNombre())); // Cambiar "usuario" por "nombreUsuario"
+            usuario.ifPresent(value -> model.addAttribute("nombreUsuario", value.getNombre()));
         } else {
-            model.addAttribute("nombreUsuario", "invitado"); // Cambiar "usuario" por "nombreUsuario"
+            model.addAttribute("nombreUsuario", "invitado");
         }
     }
 

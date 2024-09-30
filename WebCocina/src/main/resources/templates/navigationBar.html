@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:autofocus="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,7 +20,7 @@
             <div class="d-flex align-items-center">
                 <!-- Formulario de búsqueda -->
                 <form th:action="@{/buscar}" class="d-flex me-2" role="search">
-                    <input class="form-control me-2" name="q" type="search" th:placeholder="${param.q}" aria-label="Search">
+                    <input class="form-control me-2" name="q" type="search" th:placeholder="${param.q}" aria-label="Search" autofocus="autofocus">
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
 
@@ -45,13 +46,12 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                         </li>
-                        <li th:if="${#authorization.expression('isAnonymous()')}">
+                        <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}">
                             <a class="nav-link" th:href="@{/logIn}">Log in</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/signUp}">Sign up</a>
                         </li>
                         <li sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/crearReceta}">Crear receta</a>
                             <form th:action="@{/logout}" method="post">
                                 <button type="submit" class="btn btn-outline-danger">Cerrar Sesión</button>
                             </form>

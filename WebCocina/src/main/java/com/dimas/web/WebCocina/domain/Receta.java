@@ -26,6 +26,10 @@ public class Receta {
 
     private String imagenUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
     public Integer getId() {
         return id;
     }
@@ -90,4 +94,11 @@ public class Receta {
         this.imagenUrl = imagenUrl;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

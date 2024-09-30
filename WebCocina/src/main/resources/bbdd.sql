@@ -13,14 +13,20 @@ CREATE TABLE usuario (
     contrasenya VARCHAR(200) NOT NULL
 );
 
+-- Insertar pasos para cada usuario
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `contrasenya`) VALUES
+(1, 'yari', 'yari@gmail.com', '$2a$10$CGHKCkMEbIE6tSOjovSwA.0X/KOjkt3Ag/qmDkTtvkEPdU8w6RBTy');
+
 -- Crear tabla de receta
 CREATE TABLE receta (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(200) NOT NULL,
-    descripcion VARCHAR(200),
+    descripcion VARCHAR(500),
     personas INT,
     tiempo INT,
-    imagen_url VARCHAR(500)
+    imagen_url VARCHAR(500),
+    usuario_id INT,
+    CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 -- Crear tabla de ingredientes relacionados con una receta (FK)
@@ -41,36 +47,41 @@ CREATE TABLE paso (
 );
 
 -- Insertar recetas asociadas a los usuarios
-INSERT INTO receta (id, nombre, descripcion, personas, tiempo, imagen_url) VALUES
+INSERT INTO receta (id, nombre, descripcion, personas, tiempo, imagen_url, usuario_id) VALUES
 (1, 'Revuelto de ajos tiernos con champiñones',
 'Los champiñones son un alimento muy socorrido que permite preparar un sinfín de recetas. Además, no hace falta que sean frescos, en lata también están buenísimos y te pueden salvar la comida o la cena. En esta receta, los combinamos con ajos tiernos y un revuelto de huevos, ¡a tope de proteínas!',
 4 ,
 15,
-'https://content.elmueble.com/medio/2024/09/12/revuelto-de-ajos-tiernos-con-champinones_00000000_240912130518_720x720.jpg'),
+'https://content.elmueble.com/medio/2024/09/12/revuelto-de-ajos-tiernos-con-champinones_00000000_240912130518_720x720.jpg',
+1),
 
 (2, 'Habitas salteadas con jamón ibérico y chipirones',
 '¿No te apetece cocinar? Entonces sal del apuro con esta fácil y rápida receta de habitas baby salteadas con chipirones y jamón ibérico. El sabor excelente y su dificultad de preparación, mínima.',
 4,
 20,
-'https://content.elmueble.com/medio/2023/03/30/habitas-salteadas-con-jamon-iberico-y-chipirones_00000000_230821132601_600x800.jpg'),
+'https://content.elmueble.com/medio/2023/03/30/habitas-salteadas-con-jamon-iberico-y-chipirones_00000000_230821132601_600x800.jpg',
+1),
 
 (3, 'Gazpachuelo de huevo frito con tropezones',
 'Este plato típico de málaga es perfecto para cuando hace bien tiempo. Fresco, sabroso y muy sencillo de preparar, lo tendrás en tan solo 20 minutos. ¡Mira cómo se hace paso a paso!',
 5,
 20,
-'https://content.elmueble.com/medio/2023/04/03/gazpachuelo-de-huevo-frito-con-tropezones_00000000_230821131955_450x600.jpg'),
+'https://content.elmueble.com/medio/2023/04/03/gazpachuelo-de-huevo-frito-con-tropezones_00000000_230821131955_450x600.jpg',
+1),
 
 (4, 'Timbal de arroz y lomo caramelizado',
 'Esta receta es como el clásico timbal de verduras, pero con arroz y lomo caramelizado. ¡Está delicioso! Lo mejor es que es muy fácil de elaborar y apenas te robará tiempo, menos de 20 minutos. ',
 2,
 20,
-'https://content.elmueble.com/medio/2023/03/30/timbal-de-arroz-y-lomo-caramelizado_00000000_230821132643_415x600.jpg'),
+'https://content.elmueble.com/medio/2023/03/30/timbal-de-arroz-y-lomo-caramelizado_00000000_230821132643_415x600.jpg',
+1),
 
 (5, 'Budines de chocolate y canela',
 'Para un final dulce... Un postre muy sabroso, pero más ligero y fácil de preparar de lo habitual. Se denomina budín o pudín al postre originario de la cocina inglesa y cocina estadounidense que suele estar compuesto de diferentes ingredientes. Hoy, te proponemos el de chocolate y canela. ¡Delicioso!',
 4,
 20,
-'https://content.elmueble.com/medio/2013/07/05/budines-de-chocolate-y-canela_00000000_230821134400_710x768.jpg');
+'https://content.elmueble.com/medio/2013/07/05/budines-de-chocolate-y-canela_00000000_230821134400_710x768.jpg',
+1);
 
 -- Insertar ingredientes para cada receta
 -- Ingredientes para la receta "Revuelto de ajos tiernos con champiñones"
@@ -172,7 +183,3 @@ INSERT INTO paso (nombre, receta_id) VALUES
 ('Paso 3. Agrega la nata, el azúcar y la canela, y lleva a ebullición. Retira, añade el chocolate rallado y remueve. Deja templar y agrega las yemas batidas. Monta las claras e incorpóralas.', 5),
 ('Paso 4. Cuece al vapor. Reparte la crema en flaneras y cuécelas 15 minutos, en el cestillo de cocción al vapor, tapadas, hasta que cuajen. Deja reposar 5 minutos y sírvelos fríos.', 5),
 ('El truco: sirve estos budines decorados con unas frutas rojas como grosellas, moras, arándanos...', 5);
-
--- Insertar pasos para cada usuario
-INSERT INTO `usuario` (`id`, `nombre`, `correo`, `contrasenya`) VALUES
-(1, 'yari', 'yari@gmail.com', '$2a$10$CGHKCkMEbIE6tSOjovSwA.0X/KOjkt3Ag/qmDkTtvkEPdU8w6RBTy');

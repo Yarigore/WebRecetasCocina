@@ -18,6 +18,7 @@
                 <div class="card">
                     <img th:src="${receta.imagenUrl}" class="card-img-top" alt="...">
                     <div class="card-body">
+                        <a th:href="@{/recetaUsuario(nombre=${receta.usuario.nombre})}" th:text="${receta.usuario.nombre}" class="badge text-bg-primary"></a>
                         <h5 th:text="${receta.nombre}" class="card-title"></h5>
                         <p th:text="${receta.descripcion}" class="card-text"></p>
                         <a th:href="@{/receta(recetaId=${receta.id})}" class="btn btn-primary">Mostrar</a>
