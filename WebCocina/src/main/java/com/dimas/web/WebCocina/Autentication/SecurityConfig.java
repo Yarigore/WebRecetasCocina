@@ -31,8 +31,6 @@ public class SecurityConfig {
                                 "/receta/**",
                                 "/guardarUsuario",
                                 "/inicioSesion",
-                                "/guardarReceta",
-                                "/crearReceta",
                                 "/recetaUsuario").permitAll()
                         .anyRequest().authenticated()
                 )

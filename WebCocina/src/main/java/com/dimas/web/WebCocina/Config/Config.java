@@ -1,4 +1,4 @@
-package com.dimas.web.WebCocina;
+package com.dimas.web.WebCocina.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

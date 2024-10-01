@@ -81,22 +81,9 @@ public class RecetasController {
             recetaService.crearReceta(receta);
         } catch (Exception e) {
             model.addAttribute("error", "Hubo un error al guardar la receta: " + e.getMessage());
-            return "crearReceta"; // Vuelve a la página de creación
+            return "crearReceta";
         }
         return "redirect:/";
-    }
-
-    @ModelAttribute
-    public void addAttributes(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()
-                && !(authentication instanceof AnonymousAuthenticationToken)) {
-            Optional<Usuario> usuario = usuarioService.getUserByEmail(authentication.getName());
-            usuario.ifPresent(value -> model.addAttribute("nombreUsuario", value.getNombre()));
-        } else {
-            model.addAttribute("nombreUsuario", "invitado");
-        }
     }
 
 }
