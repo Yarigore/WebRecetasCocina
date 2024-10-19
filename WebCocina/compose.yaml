@@ -1,0 +1,35 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  server:
+    build:
+      context: .  # Indica que se debe construir usando el Dockerfile en el directorio actual
+    ports:
+      - 8080:80   # Redirige el puerto 8080 del host al puerto 80 del contenedor
+    volumes:
+      - .:/var/www/html  # Mapea el directorio actual al contenedor
+    depends_on:
+      - db  # Asegúrate de que la base de datos esté lista antes de iniciar el servidor
+
+  db:
+    image: mysql:5.7  # Usa la imagen oficial de MySQL
+    restart: always   # Reinicia automáticamente si se cae
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Cambia esto por una contraseña segura
+      MYSQL_DATABASE: mydatabase  # Nombre de tu base de datos
+      MYSQL_USER: user  # Usuario para la base de datos
+      MYSQL_PASSWORD: userpassword  # Cambia esto por una contraseña segura
+    ports:
+      - "3306:3306"  # Exponer el puerto de MySQL
+    volumes:
+      - db_data:/var/lib/mysql  # Persistencia de datos
+
+volumes:
+  db_data:  # Define un volumen para la base de datos
