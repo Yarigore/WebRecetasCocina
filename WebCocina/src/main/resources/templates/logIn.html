@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div th:replace="~{'/navigationBar' :: navbar}"></div>
+<div th:replace="~{'navigationBar' :: navbar}"></div>
 
 <div class="container-md mt-3" th:if="${param.error}">
         <div class="alert alert-danger">
